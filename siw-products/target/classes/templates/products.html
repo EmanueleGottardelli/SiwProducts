@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Prodotti</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo.png" width="35%"/></a></div>
+	<h1>Prodotti</h1>
+	<div th:if="${products==null || products.isEmpty()}">Non ci sono prodotti nel catalogo</div>
+	<ul>
+		<li th:each="product : ${products}">
+			<a th:href="@{'/product' + '/' + ${product.id}}"
+				th:text="${product.name} + ' (' + ${product.price} + ')'">Nome (00.00)</a>
+		</li>
+	</ul>
+</body>
+
+</html>
