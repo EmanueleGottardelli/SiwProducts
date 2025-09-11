@@ -10,5 +10,7 @@ public interface ProductRepository extends CrudRepository<Product,Long>{
 	
 	public List<Product> findByName(String name);
 	public List<Product> findByType(String type);
-	public List<Product> findByPrice(double price);
+	public List<Product> findByPrice(Double price);
+	
+	public boolean existsByNameAndPriceAndType(String name, Double price,String type);
 }

@@ -1,2 +1,40 @@
 <!DOCTYPE html>
+<html>
 
+<head>
+	<title>Product</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo.png" width="50%" /></a></div>
+	<h1>Dettagli prodotto</h1>
+	<div th:if="${product}">
+		<span th:text="${product.name}">Nome</span>
+		<span th:text="'(' + ${product.price} + ')'">00.00</span>
+		<span th:text="${product.type}">tipologia</span>
+		<span th:text="${product.description}">descrizione</span>
+	</div>
+
+	<h2>Commenti</h2>
+	<div th:if="${product.comments.isEmpty()">Non ci sono commenti per questo prodotto</div>
+	<ul>
+		<li th:each="comment : ${product.comments}">
+			<span th:text="${comment.user.credentials.username}">username</span>
+			<span th:text="${comment.text}">testo commento</span>
+		</li>
+	</ul>
+	<div th:unless="${product}">Il prodotto non è presente nel catalogo</div>
+</body>
+
+</html>

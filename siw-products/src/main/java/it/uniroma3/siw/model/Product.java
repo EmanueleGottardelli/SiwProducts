@@ -28,7 +28,7 @@ public class Product {
 	private String description;
 
 	@Column(nullable = false)
-	private double price;
+	private Double price;
 
 	@ManyToMany
 	@JoinTable(name = "product_similar", 
@@ -74,11 +74,11 @@ public class Product {
 		this.type = type;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

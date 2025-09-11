@@ -1,5 +1,6 @@
 package it.uniroma3.siw.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,13 @@ public class ProductService {
 		this.productRepository.delete(product);
 	}
 
-	public Iterable<Product> getAllProducts() {
-		return this.productRepository.findAll();
+	public List<Product> getAllProducts() {
+		List<Product> result=new ArrayList<>();
+		Iterable<Product> iterable = this.productRepository.findAll();
+		
+		for(Product product : iterable)
+			result.add(product);
+		
+		return result;
 	}
 }
