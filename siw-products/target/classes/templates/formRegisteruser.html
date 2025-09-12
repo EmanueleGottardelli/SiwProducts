@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		SiwProduct - Registrazione
+	</title>
+	<link rel="stylesheet" href="/css/stile.css?v=1.0">
+</head>
+
+<body>
+
+
+<div>
+	<div>
+		<div>
+			<h1>Sign up!</h1>
+			<form th:action="@{/register}" method="POST">
+
+				<span th:text="${messaggioErrore}">Errore</span>
+
+
+				<div>
+					<label for="username" class="form-label">Username</label>
+					<input type="text" class="form-control" id="username" placeholder="Enter your username" required th:field="${credentials.username}">
+				</div>
+				<div>
+					<label for="name" class="form-label">First Name</label>
+					<input type="text" class="form-control" id="name" placeholder="Enter your first name" required th:field="${user.name}">
+				</div>
+				<div>
+					<label for="surname" class="form-label">Last Name</label>
+					<input type="text" class="form-control" id="surname" placeholder="Enter your last name" required th:field="${user.surname}">
+				</div>
+				<div>
+					<label for="email" class="form-label">Email</label>
+					<input type="email" class="form-control" id="email" placeholder="Enter your email" required th:field="${user.email}">
+				</div>
+				<div>
+					<label for="password" class="form-label">Password</label>
+					<input type="password" class="form-control" id="password" placeholder="Enter your password" required th:field="${credentials.password}">
+				</div>
+				<button type="submit">Register</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

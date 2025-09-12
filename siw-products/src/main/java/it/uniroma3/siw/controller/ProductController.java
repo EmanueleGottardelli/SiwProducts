@@ -24,11 +24,6 @@ public class ProductController {
 	@Autowired
 	private ProductValidator productValidator;
 	
-	@GetMapping("/")
-	public String index() {
-		return "index.html";
-	}
-	
 	@GetMapping(value="/admin/operazioniProduct")
 	public String operazioniProduct() {
 		return "admin/operazioniProduct.html";
