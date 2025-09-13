@@ -24,12 +24,12 @@ public class ProductController {
 	@Autowired
 	private ProductValidator productValidator;
 	
-	@GetMapping(value="/admin/operazioniProduct")
+	@GetMapping(value="/admin/manageProduct")
 	public String operazioniProduct() {
-		return "admin/operazioniProduct.html";
+		return "admin/manageProduct.html";
 	}
 	
-	@GetMapping("/admin/fornNewProduct")
+	@GetMapping("/admin/formNewProduct")
 	public String formNewProduct(Model model) {
 		Product product = new Product();
 		model.addAttribute("product", product);

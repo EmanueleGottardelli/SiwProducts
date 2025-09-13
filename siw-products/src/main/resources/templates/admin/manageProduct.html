@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwProduct - ManageProduct</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+
+	<header>
+		<div th:if="${userAuthDetails}">
+			<span th:text="${userAuthDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+	
+	<div>
+		<a href="/"><img src="/images/logo.png"/></a>
+	</div>
+	<h1>Operazioni sui prodotti</h1>
+	
+	<div>
+		<a href="/admin/formNewProduct">Aggiungi un nuovo prodotto</a>
+	</div>
+	<div>
+		<a href="/admin/formUpdateProduct">Modifica o cancella un prodotto</a>
+	</div>
+	
+</body>
+
+</html>
