@@ -10,29 +10,25 @@
 </head>
 
 <body>
-
 	<header>
-		<div th:if="${userAuthDetails}">
-			<span th:text="${userAuthDetails.username}"></span>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
 			<a href="/logout">Logout</a>
 		</div>
 		<div th:unless="${user}">
 			<a href="/login">Login</a>
 		</div>
 	</header>
-	
-	<div>
-		<a href="/"><img src="/images/logo.png"/></a>
-	</div>
-	<h1>Operazioni sui prodotti</h1>
-	
-	<div>
-		<a href="/admin/formNewProduct">Aggiungi un nuovo prodotto</a>
-	</div>
-	<div>
-		<a href="/admin/formUpdateProduct">Modifica o cancella un prodotto</a>
-	</div>
-	
+
+	<div><a href="/"><img src="/images/logo.png" width="35%" /></a></div>
+	<h1>Film</h1>
+	<div th:if="${products.isEmpty()}">Non ci sono film nel sistema</div>
+	<ul>
+		<li th:each="product : ${products}">
+			<span th:text="${product.name} + ' (' + ${product.price} + ')'">Prodotto (00.00)</span>
+			<a th:href="@{'/admin/formUpdateProduct' + '/' + ${product.id}}">Aggiorna</a>
+		</li>
+	</ul>
 </body>
 
 </html>

@@ -27,13 +27,31 @@
 	</div>
 
 	<h2>Commenti</h2>
-	<div th:if="${product.comments.isEmpty()">Non ci sono commenti per questo prodotto</div>
-	<ul>
-		<li th:each="comment : ${product.comments}">
-			<span th:text="${comment.user.credentials.username}">username</span>
-			<span th:text="${comment.text}">testo commento</span>
-		</li>
-	</ul>
+	<div th:if="${product != null}">
+		<div th:if="${product.comments.isEmpty()}">
+			Non ci sono commenti per questo prodotto
+		</div>
+		<ul>
+			<li th:each="comment : ${product.comments}">
+				<strong th:text="${comment.user.credentials.username}">username</strong>:
+				<span th:text="${comment.text}">testo commento</span>
+
+				<!-- Pulsante elimina solo se l'utente loggato è l'autore del commento -->
+				<span th:if="${userDetails != null}">
+					<a th:if="${comment.user.credentials.username == userDetails.username}"
+						th:href="@{'/comments/' + ${comment.id} + '/delete'}"
+						style="color:red; margin-left:10px;">Elimina</a>
+				</span>
+			</li>
+		</ul>
+
+		<h3>Aggiungi un commento</h3>
+		<form th:action="@{'/products/' + ${product.id} + '/comments'}" th:object="${newComment}" method="post">
+			<textarea th:field="*{text}" placeholder="Scrivi il tuo commento..." required></textarea>
+			<button type="submit">Salva</button>
+		</form>
+	</div>
+
 	<div th:unless="${product}">Il prodotto non è presente nel catalogo</div>
 </body>
 

@@ -24,6 +24,41 @@ public class ProductController {
 	@Autowired
 	private ProductValidator productValidator;
 	
+	
+	@GetMapping(value="/admin/formUpdateProduct/{id}")
+	public String formUpdateProduct(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("product", productService.getProductById(id));
+		return "admin/formUpdateProduct.html";
+	}
+	
+	@GetMapping(value="/admin/indexProduct")
+	public String indexProduct() {
+		return "admin/indexProduct";
+	}
+	
+	@PostMapping("/products/{id}/update")
+	public String updateProduct(@PathVariable Long id,
+	                            @ModelAttribute("product") Product formProduct) {
+	    Product existing = productService.getProductById(id);
+
+	    if (formProduct.getName() != null && !formProduct.getName().isBlank()) {
+	        existing.setName(formProduct.getName());
+	    }
+	    if (formProduct.getDescription() != null && !formProduct.getDescription().isBlank()) {
+	        existing.setDescription(formProduct.getDescription());
+	    }
+	    if (formProduct.getPrice() != null) {
+	        existing.setPrice(formProduct.getPrice());
+	    }
+	    if (formProduct.getType() != null && !formProduct.getType().isBlank()) {
+	        existing.setType(formProduct.getType());
+	    }
+
+	    productService.saveProduct(existing);
+
+	    return "redirect:/products/" + id;
+	}
+
 	@GetMapping(value="/admin/manageProduct")
 	public String operazioniProduct() {
 		return "admin/manageProduct.html";
