@@ -1,42 +1,238 @@
-.form-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+/* styles.css
+   Stile generico base: layout responsivo, tipografia, componenti comuni.
+   Colori facilmente personalizzabili tramite variabili.
+*/
+
+/* 1) Reset leggero */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.form-group {
-    margin-bottom: 15px;
+html {
+  font-size: 16px; /* cambia per scalare la UI */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  line-height: 1.5;
+  color: #222;
+  background: linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+/* 2) Variabili tematizzabili */
+:root{
+  --max-width: 1100px;
+  --container-padding: 1rem;
+
+  --color-primary: #0066cc;
+  --color-primary-600: #0055aa;
+  --color-accent: #f59e0b;
+  --color-muted: #677085;
+  --bg-card: #ffffff;
+  --border: #e6eef8;
+  --success: #10b981;
+  --danger: #ef4444;
+
+  --radius: 10px;
+  --shadow-sm: 0 1px 3px rgba(16,24,40,0.06);
+  --shadow-md: 0 6px 18px rgba(16,24,40,0.08);
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+/* 3) Contenitore centrale */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.5rem var(--container-padding);
 }
 
-button:hover {
-    background-color: #0056b3;
+/* 4) Tipografia */
+h1, h2, h3, h4 {
+  color: #0f1724;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
 }
 
-.error-msg {
-    color: red;
-    margin-bottom: 10px;
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.125rem; }
+
+p {
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+
+/* 5) Navbar semplice */
+.navbar {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.navbar .container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem var(--container-padding);
+}
+
+.brand {
+  display:flex;
+  gap: 0.75rem;
+  align-items:center;
+  text-decoration: none;
+  color: var(--color-primary-600);
+  font-weight: 600;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-muted);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--color-primary-600);
+  background: rgba(0,102,204,0.06);
+  outline: none;
+}
+
+/* 6) Hero / header */
+.hero {
+  padding: 3rem 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.hero .lead {
+  max-width: 60ch;
+}
+
+/* 7) Grid di cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.card h3 { margin-bottom: .5rem; }
+.card p { font-size: .95rem; color: var(--color-muted); }
+
+/* 8) Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .6rem 0.9rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-primary-600) 100%);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,102,204,0.18);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary-600);
+  border: 1px solid rgba(0,102,204,0.12);
+}
+
+.btn:focus {
+  outline: 3px solid rgba(0,102,204,0.15);
+  outline-offset: 2px;
+}
+
+/* 9) Form */
+.form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.input, textarea, select {
+  width: 100%;
+  padding: .6rem .75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 1rem;
+}
+
+.input:focus, textarea:focus, select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(0,102,204,0.06);
+  outline: none;
+}
+
+/* small helper text and errors */
+.help { font-size: .9rem; color: var(--color-muted); }
+.error { color: var(--danger); font-size: .9rem; }
+
+/* 10) Footer */
+.footer {
+  margin-top: auto;
+  padding: 1.25rem;
+  text-align: center;
+  font-size: .9rem;
+  color: var(--color-muted);
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), transparent);
+}
+
+/* 11) Responsive */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { padding: 2rem 0; }
+}
+
+@media (max-width: 600px) {
+  :root { --container-padding: .75rem; }
+  .grid { grid-template-columns: 1fr; }
+  .navbar .container { flex-direction: column; align-items: flex-start; gap: .5rem; }
+  h1 { font-size: 1.5rem; }
 }
