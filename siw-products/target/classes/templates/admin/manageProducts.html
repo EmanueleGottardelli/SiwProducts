@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SiwProduct - ManageProduct</title>
+	<link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div><a href="/"><img src="/images/logo.png" width="35%" /></a></div>
+	<h1>Catalogo prodotti</h1>
+	<div th:if="${products.isEmpty()}">Non ci sono prodotti nel catalogo</div>
+	<ul>
+		<li th:each="product : ${products}">
+			<span th:text="${product.name + ' (' + product.price + ')'}">Prodotto (00.00)</span>
+			<a th:href="@{/admin/formUpdateProduct/{id}(id=${product.id})}">Aggiorna</a>
+		</li>
+	</ul>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		SiwProduct - Nuovo Prodotto
+	</title>
+	<link rel="stylesheet" href="/css/stile.css?v=1.0">
+</head>
+
+<body>
+	<header>
+		<div th:if="${userDetails}">
+			<span th:text="${userDetails.username}"></span>
+			<a href="/logout">Logout</a>
+		</div>
+		<div th:unless="${user}">
+			<a href="/login">Login</a>
+		</div>
+	</header>
+
+	<div> <a href="/"> <img src="/images/logo.png" width="35%" /></a></div>
+
+	<h1> Aggiungi un nuovo prodotto al catalogo </h1>
+	<form th:action="@{/admin/products}" th:object="${product}" method="POST">
+
+		<span th:text="${messaggioErrore}">Errore</span>
+		
+		<div>
+			<label for="name" class="form-label">Nome:</label>
+			<input type="text" class="form-control" id="name" placeholder="Nome prodotto" required
+				th:field="${product.name}">
+		</div>
+		<div>
+			<label for="price" class="form-label">Prezzo:</label>
+			<input type="number" class="form-control" id="price" placeholder="Prezzo prodotto" required
+				th:field="${product.price}">
+		</div>
+		<div>
+			<label for="description" class="form-label">Descrizione:</label>
+			<input type="text" class="form-control" id="description" placeholder="Descrizione prodotto"
+				required th:field="${product.description}">
+		</div>
+		<div>
+			<label for="type" class="form-label">Tipologia:</label>
+			<input type="text" class="form-control" id="type" placeholder="Tipologia prodotto" required
+				th:field="${product.type}">
+		</div>
+		<button type="submit">Aggiungi</button>
+	</form>
+</body>
+
+</html>

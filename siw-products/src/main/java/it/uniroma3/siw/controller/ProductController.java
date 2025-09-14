@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.uniroma3.siw.model.Comment;
 import it.uniroma3.siw.model.Product;
 import it.uniroma3.siw.service.ProductService;
 import it.uniroma3.siw.validator.ProductValidator;
@@ -28,7 +29,7 @@ public class ProductController {
 	@GetMapping(value="/admin/formUpdateProduct/{id}")
 	public String formUpdateProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", productService.getProductById(id));
-		return "admin/formUpdateProduct.html";
+		return "admin/formUpdateProduct";
 	}
 	
 	@GetMapping(value="/admin/indexProduct")
@@ -59,9 +60,10 @@ public class ProductController {
 	    return "redirect:/products/" + id;
 	}
 
-	@GetMapping(value="/admin/manageProduct")
-	public String operazioniProduct() {
-		return "admin/manageProduct.html";
+	@GetMapping(value="/admin/manageProducts")
+	public String operazioniProduct(Model model) {
+		model.addAttribute("products", productService.getAllProducts());		
+		return "admin/manageProducts";
 	}
 	
 	@GetMapping("/admin/formNewProduct")
@@ -110,12 +112,13 @@ public class ProductController {
 	@GetMapping("/product/{id}")
 	public String getProduct(@PathVariable("id") Long id,Model model) {
 		model.addAttribute("product", this.productService.getProductById(id));
-		return "product.html";
+		model.addAttribute("newComment", new Comment());
+		return "product";
 	}
 	
 	@GetMapping("/product")
 	public String getProducts(Model model) {
 		model.addAttribute("products", this.productService.getAllProducts());
-		return "products.html";
+		return "products";
 	}
 }
