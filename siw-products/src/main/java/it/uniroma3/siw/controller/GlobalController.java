@@ -17,7 +17,7 @@ public class GlobalController {
 	@Autowired
 	private UserService userService;
 	
-	@ModelAttribute("userAuthDetails")
+	@ModelAttribute("userDetails")
 	public UserDetails getUserAuthDetails() {
 		UserDetails userDetails = null;
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

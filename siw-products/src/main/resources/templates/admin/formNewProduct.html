@@ -24,7 +24,7 @@
             <span class="navbar-text text-white me-3" th:text="${userDetails.username}"></span>
             <a class="btn btn-outline-light" href="/logout">Logout</a>
           </div>
-          <div th:unless="${user}">
+          <div th:unless="${userDetails}">
             <a class="btn btn-outline-light" href="/login">Login</a>
           </div>
         </div>

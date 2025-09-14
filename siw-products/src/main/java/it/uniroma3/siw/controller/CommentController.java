@@ -46,7 +46,7 @@ public class CommentController {
 		return "redirect:/product/" + productId;
 	}
 
-	@PostMapping("/products/{productId}/comments")
+	@PostMapping("/product/{productId}/comments")
 	public String addComment(@PathVariable Long productId, @ModelAttribute("newComment") Comment newComment,
 			@AuthenticationPrincipal UserDetails userDetails) {
 		// recupera il prodotto
@@ -65,7 +65,7 @@ public class CommentController {
 		commentService.saveComment(newComment);
 
 		// redirect alla pagina del prodotto
-		return "redirect:/products/" + productId;
+		return "redirect:/product/" + productId;
 	}
 
 }

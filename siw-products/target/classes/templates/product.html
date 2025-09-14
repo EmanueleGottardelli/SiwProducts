@@ -25,7 +25,7 @@
             <span class="navbar-text text-white me-3" th:text="${userDetails.username}"></span>
             <a class="btn btn-outline-light" href="/logout">Logout</a>
           </div>
-          <div th:unless="${user}">
+          <div th:unless="${userDetails}">
             <a class="btn btn-outline-light" href="/login">Login</a>
           </div>
         </div>
@@ -61,11 +61,11 @@
         <li class="list-group-item d-flex justify-content-between align-items-center"
             th:each="comment : ${product.comments}">
           <div>
-            <strong th:text="${comment.user?.credentials?.username}">username</strong>: 
+            <strong th:text="${comment.author.credentials.username}">username</strong>: 
             <span th:text="${comment.text}">testo commento</span>
           </div>
           <span th:if="${userDetails != null}">
-            <a th:if="${comment.user?.credentials?.username == userDetails.username}"
+            <a th:if="${comment.author.credentials.username == userDetails.username}"
                th:href="@{/comments/{id}/delete(id=${comment.id})}"
                class="btn btn-sm btn-danger ms-3">Elimina</a>
           </span>
@@ -74,7 +74,7 @@
 
       <!-- Aggiungi commento -->
       <h3 class="mb-3">Aggiungi un commento</h3>
-      <form th:action="@{/products/{id}/comments(id=${product.id})}" th:object="${newComment}" method="post">
+      <form th:action="@{/product/{id}/comments(id=${product.id})}" th:object="${newComment}" method="post">
         <div class="mb-3">
           <textarea class="form-control" th:field="*{text}" placeholder="Scrivi il tuo commento..." required></textarea>
         </div>
