@@ -49,17 +49,21 @@ public class CommentController {
 	@PostMapping("/product/{productId}/comments")
 	public String addComment(@PathVariable Long productId, @ModelAttribute("newComment") Comment newComment,
 			@AuthenticationPrincipal UserDetails userDetails) {
+
+		// forzo il login se non si è registrati
+		if (userDetails == null)
+			return "redirect:/login";
+
 		// recupera il prodotto
 		Product product = productService.getProductById(productId);
 
-		// collega il commento al prodotto
+		// collego il commento al prodotto
 		newComment.setProduct(product);
-
-		if (userDetails != null) {
-			Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
-			User user = credentials.getUser();
-			newComment.setAuthor(user);
-		}
+		
+		// collego credenziali e user al commento 
+		Credentials credentials = credentialsService.getCredentials(userDetails.getUsername());
+		User user = credentials.getUser();
+		newComment.setAuthor(user);
 
 		// salva
 		commentService.saveComment(newComment);

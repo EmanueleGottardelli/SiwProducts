@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,6 +21,10 @@ public class User {
 	private String name;
 	private String surname;
 	private String email;
+	
+	
+	@OneToOne(mappedBy="user")
+	private Credentials credentials;
 	
 	@OneToMany(mappedBy="author")
 	private List<Comment> comments;
@@ -62,5 +67,13 @@ public class User {
 
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+
+	public Credentials getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
 	}
 }

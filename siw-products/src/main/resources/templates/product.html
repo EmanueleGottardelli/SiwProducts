@@ -74,7 +74,7 @@
 
       <!-- Aggiungi commento -->
       <h3 class="mb-3">Aggiungi un commento</h3>
-      <form th:action="@{/product/{id}/comments(id=${product.id})}" th:object="${newComment}" method="post">
+      <form th:action="@{/product/{productId}/comments(productId=${product.id})}" th:object="${newComment}" method="post">
         <div class="mb-3">
           <textarea class="form-control" th:field="*{text}" placeholder="Scrivi il tuo commento..." required></textarea>
         </div>
