@@ -1,55 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
-	<title>Product</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Il tuo CSS personalizzato -->
+  <link rel="stylesheet" href="/css/stile.css" />
 </head>
 
-<body>
-	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<div th:unless="${user}">
-			<a href="/login">Login</a>
-		</div>
-	</header>
+<body class="bg-light">
 
-	<div><a href="/"><img src="/images/logo.png" width="50%" /></a></div>
-	<h1>Dettagli prodotto</h1>
-	<div th:if="${product}">
-		<span th:text="${product.name}">Nome</span>
-		<span th:text="'(' + ${product.price} + ')'">00.00</span>
-		<span th:text="${product.type}">tipologia</span>
-		<span th:text="${product.description}">descrizione</span>
-	</div>
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">SiwProduct</a>
+        <div class="d-flex">
+          <div th:if="${userDetails}">
+            <span class="navbar-text text-white me-3" th:text="${userDetails.username}"></span>
+            <a class="btn btn-outline-light" href="/logout">Logout</a>
+          </div>
+          <div th:unless="${user}">
+            <a class="btn btn-outline-light" href="/login">Login</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-	<h2>Commenti</h2>
-	<div th:if="${product}">
-		<div th:if="${product.comments != null and #lists.isEmpty(product.comments)}">
-			Non ci sono commenti per questo prodotto
-		</div>
-		<ul>
-		  <li th:each="comment : ${product.comments}">
-		    <strong th:text="${comment.user?.credentials?.username}">username</strong>:
-		    <span th:text="${comment.text}">testo commento</span>
+  <!-- Logo -->
+  <div class="text-center mt-4">
+    <a href="/"><img src="/images/logo.png" class="img-fluid" style="max-width: 40%;" alt="Logo"></a>
+  </div>
 
-		    <span th:if="${userDetails != null}">
-		      <a th:if="${comment.user?.credentials?.username == userDetails.username}"
-		         th:href="@{/comments/{id}/delete(id=${comment.id})}"
-		         style="color:red; margin-left:10px;">Elimina</a>
-		    </span>
-		  </li>
-		</ul>
+  <!-- Dettagli prodotto -->
+  <main class="container mt-5">
+    <h1 class="mb-4 text-center">Dettagli prodotto</h1>
 
-		<h3>Aggiungi un commento</h3>
-		<form th:action="@{/products/{id}/comments(id=${product.id})}" th:object="${newComment}" method="post">
-		  <textarea th:field="*{text}" placeholder="Scrivi il tuo commento..." required></textarea>
-		  <button type="submit">Salva</button>
-		</form>
-	<div th:unless="${product}">Il prodotto non è presente nel catalogo</div>
+    <div th:if="${product}" class="card shadow p-4 mb-5">
+      <h2 class="card-title" th:text="${product.name}">Nome prodotto</h2>
+      <h4 class="text-success" th:text="'€ ' + ${product.price}">00.00</h4>
+      <p class="text-muted" th:text="${product.type}">Tipologia</p>
+      <p class="card-text" th:text="${product.description}">Descrizione prodotto</p>
+    </div>
+
+    <!-- Commenti -->
+    <section th:if="${product}">
+      <h2 class="mb-3">Commenti</h2>
+
+      <div th:if="${product.comments != null and #lists.isEmpty(product.comments)}" class="alert alert-secondary">
+        Non ci sono commenti per questo prodotto
+      </div>
+
+      <ul class="list-group mb-4">
+        <li class="list-group-item d-flex justify-content-between align-items-center"
+            th:each="comment : ${product.comments}">
+          <div>
+            <strong th:text="${comment.user?.credentials?.username}">username</strong>: 
+            <span th:text="${comment.text}">testo commento</span>
+          </div>
+          <span th:if="${userDetails != null}">
+            <a th:if="${comment.user?.credentials?.username == userDetails.username}"
+               th:href="@{/comments/{id}/delete(id=${comment.id})}"
+               class="btn btn-sm btn-danger ms-3">Elimina</a>
+          </span>
+        </li>
+      </ul>
+
+      <!-- Aggiungi commento -->
+      <h3 class="mb-3">Aggiungi un commento</h3>
+      <form th:action="@{/products/{id}/comments(id=${product.id})}" th:object="${newComment}" method="post">
+        <div class="mb-3">
+          <textarea class="form-control" th:field="*{text}" placeholder="Scrivi il tuo commento..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Salva</button>
+      </form>
+    </section>
+
+    <div th:unless="${product}" class="alert alert-danger mt-4">
+      Il prodotto non è presente nel catalogo
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

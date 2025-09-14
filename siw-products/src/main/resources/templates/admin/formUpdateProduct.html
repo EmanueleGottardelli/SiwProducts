@@ -1,53 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
-	<meta charset="UTF-8">
-	<title>Modifica Prodotto</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SiwProduct - Modifica Prodotto</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Il tuo CSS personalizzato -->
+  <link rel="stylesheet" href="/css/stile.css">
 </head>
 
-<body>
-	<div class="container">
-		<h1>Modifica Prodotto</h1>
+<body class="bg-light">
 
-		<form th:action="@{'/admin/updateProduct/' + ${product.id}}" th:object="${product}" method="post">
+  <main class="container mt-5">
+    <div class="card shadow-lg p-4">
+      <h1 class="text-center mb-4">Modifica Prodotto</h1>
 
-			<!-- Nome -->
-			<label for="name">Nome</label>
-			<input id="name" type="text" th:field="*{name}" />
+      <form th:action="@{'/admin/updateProduct/' + ${product.id}}" th:object="${product}" method="post">
 
-			<!-- Descrizione -->
-			<label for="description">Descrizione</label>
-			<textarea id="description" th:field="*{description}"></textarea>
+        <!-- Nome -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Nome</label>
+          <input id="name" type="text" class="form-control" th:field="*{name}" required>
+        </div>
 
-			<!-- Prezzo -->
-			<label for="price">Prezzo (€)</label>
-			<input id="price" type="number" step="0.01" min="0" th:field="*{price}" />
+        <!-- Descrizione -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Descrizione</label>
+          <textarea id="description" class="form-control" rows="3" th:field="*{description}" required></textarea>
+        </div>
 
-			<!-- Tipo -->
-			<label for="type">Tipo</label>
-			<input id="type" type="text" th:field="*{type}" />
+        <!-- Prezzo -->
+        <div class="mb-3">
+          <label for="price" class="form-label">Prezzo (€)</label>
+          <input id="price" type="number" step="0.01" min="0" class="form-control" th:field="*{price}" required>
+        </div>
 
-			<!-- Commenti -->
-			<h2>Commenti</h2>
-			<div th:if="${#lists.isEmpty(product.comments)}">
-				Nessun commento presente.
-			</div>
-			<div th:each="c : ${product.comments}" class="comment">
-				<p th:text="${c.text}"></p>
-				<div class="comment-actions">
-					<a th:href="@{'/comments/' + ${c.id} + '/delete'}" class="btn btn-danger">Elimina</a>
-				</div>
-			</div>
+        <!-- Tipo -->
+        <div class="mb-4">
+          <label for="type" class="form-label">Tipo</label>
+          <input id="type" type="text" class="form-control" th:field="*{type}" required>
+        </div>
 
-			<!-- Pulsanti -->
-			<div class="actions">
-				<button type="submit" class="btn btn-primary">Salva modifiche</button>
-				<a th:href="@{/products}" class="btn">Annulla</a>
-			</div>
-			</fo>
-	</div>
+        <!-- Commenti -->
+        <h2 class="h4 mb-3">Commenti</h2>
+        <div th:if="${#lists.isEmpty(product.comments)}" class="alert alert-secondary">
+          Nessun commento presente.
+        </div>
+        <ul class="list-group mb-4" th:each="c : ${product.comments}">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span th:text="${c.text}">Testo commento</span>
+            <a th:href="@{'/comments/' + ${c.id} + '/delete'}" class="btn btn-sm btn-danger">Elimina</a>
+          </li>
+        </ul>
+
+        <!-- Pulsanti -->
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary">Salva modifiche</button>
+          <a th:href="@{/products}" class="btn btn-outline-secondary">Annulla</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

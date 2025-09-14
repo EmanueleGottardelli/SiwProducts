@@ -37,7 +37,7 @@ public class ProductController {
 		return "admin/indexProduct";
 	}
 	
-	@PostMapping("/products/{id}/update")
+	@PostMapping("/admin/updateProduct/{id}")
 	public String updateProduct(@PathVariable Long id,
 	                            @ModelAttribute("product") Product formProduct) {
 	    Product existing = productService.getProductById(id);
@@ -57,7 +57,7 @@ public class ProductController {
 
 	    productService.saveProduct(existing);
 
-	    return "redirect:/products/" + id;
+	    return "redirect:/product/" + id;
 	}
 
 	@GetMapping(value="/admin/manageProducts")
@@ -73,17 +73,24 @@ public class ProductController {
 		return "admin/formNewProduct.html";
 	}
 	
-	@PostMapping("/admin/products")
+	@PostMapping("/admin/product")
 	public String newProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model) {
 		productValidator.validate(product, bindingResult);
 		if(!bindingResult.hasErrors()) {
 			this.productService.saveProduct(product);
 			model.addAttribute("product", product);
-			return "product";
+			return "redirect:/product";
 		} else {
 			model.addAttribute("messaggioErrore", "Questo prodotto esiste già nel catalogo, inseriscine un altro:");
-			return "admin/formNewProduct.html";
+			return "admin/formNewProduct";
 		}
+	}
+	
+	@PostMapping("/admin/deleteProduct/{product_id}")
+	public String deleteProduct(@PathVariable("product_id") Long id) {
+		Product product = this.productService.getProductById(id);
+		productService.deleteProduct(product);
+		return "redirect:/admin/manageProducts";
 	}
 	
 	@GetMapping("/formSearchProduct")
