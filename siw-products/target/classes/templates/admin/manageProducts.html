@@ -65,6 +65,31 @@
 								method="post" style="display:inline">
 								<button type="submit" class="btn btn-danger btn-sm">Elimina</button>
 							</form>
+							<!-- Sezione gestione simili -->
+							<div class="mt-3">
+								<strong>Prodotti simili:</strong>
+								<ul class="list-unstyled mt-2">
+									<li th:each="s : ${product.similarProducts}">
+										<span th:text="${s.name}"></span>
+										<form th:action="@{/admin/product/{id}/removeSimilar(id=${product.id})}"
+											method="post" style="display:inline">
+											<input type="hidden" name="similarId" th:value="${s.id}" />
+											<button type="submit"
+												class="btn btn-outline-danger btn-sm ms-2">Rimuovi</button>
+										</form>
+									</li>
+								</ul>
+
+								<!-- Aggiunta nuovo simile -->
+								<form th:action="@{/admin/product/{id}/addSimilar(id=${product.id})}" method="post"
+									class="d-flex mt-2">
+									<select class="form-select form-select-sm me-2" name="similarId">
+										<option th:each="p : ${products}" th:value="${p.id}" th:text="${p.name}">
+										</option>
+									</select>
+									<button type="submit" class="btn btn-outline-success btn-sm">Aggiungi</button>
+								</form>
+							</div>
 						</td>
 					</tr>
 				</tbody>

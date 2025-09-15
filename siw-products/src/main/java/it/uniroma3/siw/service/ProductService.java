@@ -39,6 +39,26 @@ public class ProductService {
 	public void deleteProduct(Product product) {
 		this.productRepository.delete(product);
 	}
+	
+	public void addProductSimilar(Long productId,Long similarId) {
+		Product product = getProductById(productId);
+		Product similar = getProductById(similarId);
+		
+		product.getSimilarProducts().add(similar);
+		similar.getSimilarProducts().add(product);
+		
+		saveProduct(product);
+	}
+	
+	public void deleteProductSimilar(Long productId, Long similarId) {
+		Product product = getProductById(productId);
+		Product similar = getProductById(similarId);
+		
+		product.getSimilarProducts().remove(similar);
+		similar.getSimilarProducts().remove(product);
+		
+		saveProduct(product);
+	}
 
 	public List<Product> getAllProducts() {
 		List<Product> result=new ArrayList<>();

@@ -48,6 +48,30 @@
       <p class="text-muted" th:text="${product.type}">Tipologia</p>
       <p class="card-text" th:text="${product.description}">Descrizione prodotto</p>
     </div>
+	
+	<!-- Prodotti simili -->
+	<section th:if="${product}">
+	  <h2 class="mb-3">Prodotti simili</h2>
+
+	  <!-- Caso: nessun prodotto simile -->
+	  <div th:if="${product.similarProducts == null or #lists.isEmpty(product.similarProducts)}" 
+	       class="alert alert-secondary">
+	    Non ci sono prodotti simili
+	  </div>
+
+	  <!-- Caso: lista prodotti simili -->
+	  <ul class="list-group" 
+	      th:if="${product.similarProducts != null and !#lists.isEmpty(product.similarProducts)}">
+	    <li class="list-group-item d-flex justify-content-between align-items-center"
+	        th:each="similar : ${product.similarProducts}">
+	      <div>
+	        <a th:href="@{/product/{id}(id=${similar.id})}" 
+	           th:text="${similar.name}">Nome prodotto simile</a>
+	        <span class="text-muted ms-2" th:text="'€ ' + ${similar.price}"></span>
+	      </div>
+	    </li>
+	  </ul>
+	</section>
 
     <!-- Commenti -->
     <section th:if="${product}">

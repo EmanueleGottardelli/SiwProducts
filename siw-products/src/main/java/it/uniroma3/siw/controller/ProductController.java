@@ -26,6 +26,18 @@ public class ProductController {
 	private ProductValidator productValidator;
 	
 	
+	@PostMapping("/admin/product/{id}/addSimilar")
+	public String addSimilarProduct(@PathVariable("id") Long id, @RequestParam("similarId") Long similarId) {
+		productService.addProductSimilar(id, similarId);
+		return "redirect:/admin/manageProducts";
+	}
+	
+	@PostMapping("/admin/product/{id}/removeSimilar")
+	public String removeSimilarProduct(@PathVariable("id") Long id, @RequestParam("similarId") Long similarId) {
+		productService.deleteProductSimilar(id, similarId);
+		return "redirect:/admin/manageProducts";
+	}
+	
 	@GetMapping(value="/admin/formUpdateProduct/{id}")
 	public String formUpdateProduct(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("product", productService.getProductById(id));
