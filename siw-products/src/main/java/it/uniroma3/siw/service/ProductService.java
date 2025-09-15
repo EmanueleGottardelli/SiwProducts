@@ -20,6 +20,19 @@ public class ProductService {
 		return this.productRepository.findById(id).get();
 	}
 	
+	public List<Product> searchProducts(String name, String type, Double price) {
+	    if (name != null && !name.isBlank()) {
+	        return this.getProductsByName(name);
+	    }
+	    if (type != null && !type.isBlank()) {
+	        return this.getProductsByType(type);
+	    }
+	    if (price != null) {
+	        return this.getProductsByPrice(price);
+	    }
+	    return (List<Product>) this.productRepository.findAll();
+	}
+	
 	public List<Product> getProductsByName(String name){
 		return this.productRepository.findByName(name);
 	}

@@ -57,8 +57,39 @@
           <a href="/admin/indexProduct" class="btn btn-warning btn-lg">Gestione prodotti</a>
         </div>
       </div>
-
+	
     </div>
+	<!-- 🔎 Sezione Ricerca -->
+		  <section class="container mt-5">
+		    <div class="card shadow p-4">
+		      <h2 class="mb-4 text-center">Cerca un prodotto</h2>
+		      <form class="row g-3" action="/searchProducts" method="get">
+		        
+		        <!-- Ricerca per Nome -->
+		        <div class="col-md-4">
+		          <label for="name" class="form-label">Nome</label>
+		          <input type="text" id="name" name="name" class="form-control" placeholder="Inserisci nome prodotto">
+		        </div>
+		        
+		        <!-- Ricerca per Tipo -->
+		        <div class="col-md-4">
+		          <label for="type" class="form-label">Tipo</label>
+		          <input type="text" id="type" name="type" class="form-control" placeholder="Inserisci tipo prodotto">
+		        </div>
+		        
+		        <!-- Ricerca per Prezzo -->
+		        <div class="col-md-4">
+		          <label for="price" class="form-label">Prezzo massimo</label>
+		          <input type="number" id="price" name="price" class="form-control" placeholder="Es. 100">
+		        </div>
+		        
+		        <!-- Bottone Ricerca -->
+		        <div class="col-12 text-center mt-3">
+		          <button type="submit" class="btn btn-primary btn-lg">Cerca</button>
+		        </div>
+		      </form>
+		    </div>
+		  </section>
   </main>
 
   <!-- Bootstrap JS -->

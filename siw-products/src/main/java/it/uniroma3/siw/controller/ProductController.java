@@ -1,5 +1,7 @@
 package it.uniroma3.siw.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -105,29 +107,18 @@ public class ProductController {
 		return "redirect:/admin/manageProducts";
 	}
 	
-	@GetMapping("/formSearchProduct")
-	public String formSearchProduct() {
-		return "formSearchProduct.html";
+	@GetMapping("/searchProducts")
+	public String searchProducts(
+	        @RequestParam(required = false) String name,
+	        @RequestParam(required = false) String type,
+	        @RequestParam(required = false) Double price,
+	        Model model) {
+	    
+	    List<Product> results = this.productService.searchProducts(name, type, price);
+	    model.addAttribute("products", results);
+	    return "searchResults";
 	}
-	
-	@PostMapping("/searchProductsByName")
-	public String searchProductsByName(Model model,@RequestParam String name) {
-		model.addAttribute("products", this.productService.getProductsByName(name));
-		return "searchProductsByName.html";
-	}
-	
-	@PostMapping("/searchProductsByPrice")
-	public String searchProductsByPrice(Model model,@RequestParam Double price) {
-		model.addAttribute("products", this.productService.getProductsByPrice(price));
-		return "searchProductsByPrice.html";
-	}
-	
-	@PostMapping("/searchProductsByType")
-	public String searchProductsByType(Model model,@RequestParam String type) {
-		model.addAttribute("products", this.productService.getProductsByType(type));
-		return "searchProductsByType.html";
-	}
-	
+
 	@GetMapping("/product/{id}")
 	public String getProduct(@PathVariable("id") Long id,Model model) {
 		model.addAttribute("product", this.productService.getProductById(id));
