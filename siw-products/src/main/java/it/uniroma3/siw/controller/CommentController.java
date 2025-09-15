@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,39 @@ public class CommentController {
 
 	@Autowired
 	private CredentialsService credentialsService;
+	
+	@GetMapping("/comments/{id}/edit")
+	public String editCommentForm(@PathVariable Long id, 
+	                              @AuthenticationPrincipal UserDetails userDetails, 
+	                              Model model) {
+	    Comment comment = commentService.getCommentById(id);
+
+	    // Controllo: solo l'autore può modificare
+	    if (!comment.getAuthor().getCredentials().getUsername().equals(userDetails.getUsername())) {
+	        return "redirect:/product/" + comment.getProduct().getId();
+	    }
+
+	    model.addAttribute("comment", comment);
+	    return "editComment"; // template Thymeleaf per il form di modifica
+	}
+
+	@PostMapping("/comments/{id}/edit")
+	public String updateComment(@PathVariable Long id,
+	                            @ModelAttribute("comment") Comment updatedComment,
+	                            @AuthenticationPrincipal UserDetails userDetails) {
+	    Comment comment = commentService.getCommentById(id);
+
+	    // Controllo: solo l'autore può modificare
+	    if (!comment.getAuthor().getCredentials().getUsername().equals(userDetails.getUsername())) {
+	        return "redirect:/product/" + comment.getProduct().getId();
+	    }
+
+	    comment.setText(updatedComment.getText());
+	    commentService.saveComment(comment);
+
+	    return "redirect:/product/" + comment.getProduct().getId();
+	}
+
 
 	@GetMapping("/comments/{id}/delete")
 	public String deleteComment(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
